@@ -1,0 +1,3 @@
+include muds/templates/*
+include muds/opts.yml
+include muds/muds.wsgi

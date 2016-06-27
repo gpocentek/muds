@@ -1,0 +1,66 @@
+- name: admin_password
+  type: string
+  default: admin_password
+  desc: OS administrator password
+  templates:
+    "[[local|localrc]]": "ADMIN_PASSWORD = {{ data['admin_password'] }}"
+
+- name: mysql
+  type: boolean
+  default: true
+  desc: enable MySQL
+  templates:
+    "[[local|localrc]]": "{% if data.mysql %}enable_service mysql{% endif -%}"
+  children:
+    - name: password
+      when_parent_is: true
+      type: string
+      default: secret_mysql
+      desc: database password
+      templates:
+        "[[local|localrc]]": |
+          DATABASE_PASSWORD = {{ data['mysql.password'] }}
+
+- name: rabbitmq
+  type: boolean
+  default: true
+  desc: enable RabbitMQ
+  templates:
+    "[[local|localrc]]": "{% if data.rabbitmq %}enable_service rabbitmq{% endif %}"
+  children:
+    - name: password
+      when_parent_is: true
+      type: string
+      default: secret_rabbit
+      desc: rabbitmq password
+      templates:
+        "[[local|localrc]]": |
+          RABBIT_PASSWORD = {{ data['rabbitmq.password'] }}
+
+
+- name: test
+  type: choice
+  default: one
+  desc: Test Choice
+  choices: ['one', 'two', 'three']
+  templates:
+    "[[local|localrc]]": "test = {{ data['test'] }}"
+  children:
+    - name: on_one
+      when_parent_is: one
+      type: string
+      desc: one_related_option
+      templates:
+        "[[local|localrc]]": "opt one"
+    - name: on_two
+      when_parent_is: two
+      type: string
+      desc: two_related_option
+      templates:
+        "[[local|localrc]]": "opt two"
+    - name: on_three
+      when_parent_is: three
+      type: string
+      desc: three_related_option
+      templates:
+        "[[local|localrc]]": "opt three"

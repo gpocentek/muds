@@ -41,7 +41,7 @@
     - name: password
       when_parent_is: true
       type: string
-      default: secret_mysql
+      default: password
       desc: Database password
       templates:
         "[[local|localrc]]": |
@@ -57,7 +57,7 @@
     - name: password
       when_parent_is: true
       type: string
-      default: secret_rabbit
+      default: password
       desc: RabbitMQ password
       templates:
         "[[local|localrc]]": |
@@ -83,6 +83,19 @@
   desc: Enable Neutron
   templates:
     "[[local|localrc]]": "{% if data.neutron %}enable_service neutron,q-svc,q-agt,q-dhcp,q-l3,q-meta{% endif %}"
+  children:
+    - name: lbaas
+      type: boolean
+      default: true
+      desc: Enable LBaaS
+      templates:
+        "[[local|localrc]]": "{% if data.neutron and data['neutron.lbaas'] %}enable_service q-lbaas{% endif %}"
+    - name: fwaas
+      type: boolean
+      default: false
+      desc: Enable FWaaS
+      templates:
+        "[[local|localrc]]": "{% if data.neutron and data['neutron.fwaas'] %}enable_service q-fwaas{% endif %}"
 
 - name: nova
   type: boolean
@@ -97,3 +110,10 @@
   desc: Enable Cinder
   templates:
     "[[local|localrc]]": "{% if data.cinder %}enable_service c-api,c-sched,c-vol{% endif %}"
+
+- name: horizon
+  type: boolean
+  default: true
+  desc: Enable Horizon
+  templates:
+    "[[local|localrc]]": "{% if data.horizon %}enable_service horizon{% endif %}"

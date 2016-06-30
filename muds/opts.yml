@@ -36,31 +36,3 @@
       templates:
         "[[local|localrc]]": |
           RABBIT_PASSWORD = {{ data['rabbitmq.password'] }}
-
-
-- name: test
-  type: choice
-  default: one
-  desc: Test Choice
-  choices: ['one', 'two', 'three']
-  templates:
-    "[[local|localrc]]": "test = {{ data['test'] }}"
-  children:
-    - name: on_one
-      when_parent_is: one
-      type: string
-      desc: one_related_option
-      templates:
-        "[[local|localrc]]": "opt one"
-    - name: on_two
-      when_parent_is: two
-      type: string
-      desc: two_related_option
-      templates:
-        "[[local|localrc]]": "opt two"
-    - name: on_three
-      when_parent_is: three
-      type: string
-      desc: three_related_option
-      templates:
-        "[[local|localrc]]": "opt three"

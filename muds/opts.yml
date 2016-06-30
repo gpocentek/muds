@@ -1,3 +1,9 @@
+- name: disable_all_services
+  type: hidden
+  desc: Disable all services
+  templates:
+    "[[local|localrc]]": "disable_all_services"
+
 - name: admin_password
   type: string
   default: admin_password

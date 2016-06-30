@@ -6,7 +6,8 @@ import yaml
 TYPES = {
     'boolean': 'BooleanNode',
     'string': 'StringNode',
-    'choice': 'ChoiceNode'
+    'choice': 'ChoiceNode',
+    'hidden': 'HiddenNode'
 }
 
 
@@ -142,6 +143,16 @@ class ChoiceNode(StringNode):
                                                         choice)
         s += '</select>'
         return s
+
+
+class HiddenNode(Node):
+    type = 'hidden'
+
+    def set_default_value(self):
+        self.value = None
+
+    def get_form(self):
+        return ''
 
 
 class RootNode(Node):

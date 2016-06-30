@@ -7,11 +7,16 @@ from muds import tree
 
 app = Flask(__name__)
 
+root = None
+
 
 def _get_root():
-    opts_file = os.path.join(os.path.dirname(__file__), 'opts.yml')
-    data = yaml.load(open(opts_file))
-    return tree.RootNode(data)
+    global root
+    if root is None:
+        opts_file = os.path.join(os.path.dirname(__file__), 'opts.yml')
+        data = yaml.load(open(opts_file))
+        root = tree.RootNode(data)
+    return root
 
 
 @app.route('/')

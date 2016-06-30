@@ -161,29 +161,3 @@ class RootNode(Node):
 
     def get_form(self):
         return ''
-
-
-if __name__ == '__main__':
-    data = yaml.load(open('opts.yml'))
-    root = RootNode(data)
-
-    #for name, obj in root.children.items():
-    #    print name, obj
-    #print(root.children)
-    #print root.children['rabbitmq'].get_child_value('password')
-    #root.dump_value_tree()
-    #print root.get_value_tree()
-    #print root.children['mysql'].children['password'].get_local_conf_data()
-
-    new_values = {
-        'mysql': False,
-        'rabbitmq.password': 'SBDJLFBSJDLF',
-        'test': 'three'
-    }
-    root.set_children_values(new_values)
-
-    data = root.get_local_conf_data()
-    for section, lines in data.items():
-        print section
-        print lines
-        print

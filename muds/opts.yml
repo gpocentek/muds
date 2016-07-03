@@ -109,6 +109,13 @@
   templates:
     - "{% if data.cinder %}enable_service c-api,c-sched,c-vol{% endif %}"
 
+- name: swift
+  type: boolean
+  default: false
+  desc: Enable Swift
+  templates:
+    - "{% if data.swift %}enable_service s-proxy,s-object,s-container,s-account{% endif %}"
+
 - name: horizon
   type: boolean
   default: true

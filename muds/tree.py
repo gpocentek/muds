@@ -92,10 +92,11 @@ class Node(object):
     def get_tree_form(self):
         vtree = self.root.get_value_tree()
         form = self.get_form()
-        form += '<div class="subform">'
-        for name, child in self.children.items():
-            form += child.get_tree_form()
-        form += '</div>'
+        if self.children:
+            #form += '<div>'
+            for name, child in self.children.items():
+                form += child.get_tree_form()
+            #form += '</div>'
 
         return form
 
@@ -111,9 +112,17 @@ class BooleanNode(Node):
 
     def get_form(self):
         checked = 'checked="checked"' if self.value else ''
-        s = ('%s <input type="checkbox" %s name="%s">' %
-             (self.desc, checked, self.path))
-        h = '<input type="hidden" value="0" name="%s">' % self.path
+        s = ('<div class="checkbox">'
+             '<label>'
+             '<input type="checkbox" %(c)s id="%(path)s" name="%(path)s"/>'
+             ' %(desc)s</label>'
+             '</div>' % {
+                 'c': checked,
+                 'path': self.path,
+                 'desc': self.desc
+             })
+        h=''
+        #h = '<input type="hidden" value="0" name="%s">' % self.path
         return s + h
 
 
@@ -124,8 +133,15 @@ class StringNode(Node):
         self.value = self.data.get('default', '')
 
     def get_form(self):
-        return ('%s <input name="%s" value="%s">' %
-                (self.desc, self.path, self.value))
+        return ('<div class="form-group">'
+                '<label for="%(path)s">%(desc)s:</label>'
+                '<input class="form-control" name="%(path)s" '
+                'value="%(value)s" id="%(path)s"/>'
+                '</div>' % {
+                    'path': self.path,
+                    'desc': self.desc,
+                    'value': self.value
+                })
 
 
 class ChoiceNode(StringNode):
@@ -136,12 +152,19 @@ class ChoiceNode(StringNode):
         self.choices = data['choices']
 
     def get_form(self):
-        s = '%s <select name="%s">' % (self.desc, self.path)
+        s = ('<div class="form-group">'
+             '<label for="%(path)s">%(desc)s:</label>"'
+             '<select class="form-control" name="%(path)s" id="%(path)s">' % {
+                 'path': self.path,
+                 'desc': self.desc
+             })
         for choice in self.choices:
             selected = 'selected="selected"' if choice == self.value else ''
-            s += '<option value="%s" %s>%s</option>' % (choice, selected,
-                                                        choice)
-        s += '</select>'
+            s += '<option value="%(choice)s" %(s)s>%(choice)s</option>' % {
+                'choice': choice,
+                's': selected
+            }
+        s += '</select></div>'
         return s
 
 

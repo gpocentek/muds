@@ -1,3 +1,4 @@
 include muds/templates/*
+include muds/static/*
 include muds/opts.yml
 include muds/muds.wsgi

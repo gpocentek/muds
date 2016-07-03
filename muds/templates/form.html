@@ -1,16 +1,20 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <style>
-    div {
-      border-left: 2px solid blue;
-      padding-left: 18px;
-    }
-  </style>
+  <title>MUDS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </head>
+
 <body>
-<form method="post" action="/go">
+<div class="container">
+<form method="post" action="/go" role="form">
 {{ form|safe }}
-  <input type="submit" value="go">
+<button type="submit" class="btn btn-primary">Go</button>
 </form>
+</div>
 </body>
 </html>

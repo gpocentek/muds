@@ -93,10 +93,13 @@ class Node(object):
         vtree = self.root.get_value_tree()
         form = self.get_form()
         if self.children:
-            #form += '<div>'
+            subform = ''
             for name, child in self.children.items():
-                form += child.get_tree_form()
-            #form += '</div>'
+                subform += child.get_tree_form()
+            if self.parent is not None:
+                subform = '<div class="form-indent">%s</div>' % subform
+
+            form += subform
 
         return form
 

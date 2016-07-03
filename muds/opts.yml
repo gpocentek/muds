@@ -34,7 +34,7 @@
 - name: mysql
   type: boolean
   default: true
-  desc: enable MySQL
+  desc: Enable MySQL
   templates:
     "[[local|localrc]]": "{% if data.mysql %}enable_service mysql{% endif -%}"
   children:

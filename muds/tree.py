@@ -124,8 +124,8 @@ class BooleanNode(Node):
                  'path': self.path,
                  'desc': self.desc
              })
-        h=''
-        #h = '<input type="hidden" value="0" name="%s">' % self.path
+        h = ('<input type="hidden" value="0" name="%s">' %
+             self.path)
         return s + h
 
 

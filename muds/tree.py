@@ -65,26 +65,26 @@ class Node(object):
             print "%s%s : %s" % (indent * ' ', name, child.value)
             child.dump_value_tree(indent + 2)
 
-    def get_local_conf_data(self):
+    def get_local_conf_lines(self):
         vtree = self.root.get_value_tree()
-        data = {}
-        for section, template_str in self.templates.items():
-            data.setdefault(section, '')
+        lines = []
+        for template_str in self.templates:
             j2_tmpl = jinja2.Template(template_str)
-            lines = j2_tmpl.render(data=vtree)
-            data[section] += lines
+            line = j2_tmpl.render(data=vtree)
+            if line:
+                if hasattr(self, 'desc'):
+                    lines.append("# %s" % self.desc)
+                lines.append(line)
 
         # manage running through children
         for name, child in self.children.items():
             if (child.when_parent_is is not None and
                child.when_parent_is != self.value):
                 continue
-            child_data = child.get_local_conf_data()
+            child_lines = child.get_local_conf_lines()
+            lines.extend(child_lines)
 
-            for child_section, child_lines in child_data.items():
-                data[child_section] = (data.setdefault(child_section, '') +
-                                       '\n' + child_lines)
-        return data
+        return lines
 
     def get_form(self):
         raise NotImplementedError

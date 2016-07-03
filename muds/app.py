@@ -31,11 +31,10 @@ def go():
 
     form_data = {k: v for k, v in request.values.items()}
     root.set_children_values(form_data)
-    data = root.get_local_conf_data()
-    local_conf = ''
-    for section, lines in data.items():
-        local_conf += section
-        local_conf += lines
+    lines = root.get_local_conf_lines()
+    local_conf = '[[local|localrc]]\n'
+    for line in lines:
+        local_conf += line + '\n'
 
     return Response(local_conf, mimetype='text/plain')
 

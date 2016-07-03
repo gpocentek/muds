@@ -2,41 +2,41 @@
   type: hidden
   desc: Disable all services
   templates:
-    "[[local|localrc]]": "disable_all_services"
+    - "disable_all_services"
 
 - name: reclone
   type: boolean
   desc: Reclone
   templates:
-    "[[local|localrc]]": "{% if data.reclone %}RECLONE=yes{% endif %}"
+    - "{% if data.reclone %}RECLONE=yes{% endif %}"
 
 - name: admin_password
   type: string
   default: password
   desc: OS administrator password
   templates:
-    "[[local|localrc]]": "ADMIN_PASSWORD = {{ data['admin_password'] }}"
+    - "ADMIN_PASSWORD = {{ data['admin_password'] }}"
 
 - name: service_password
   type: string
   default: password
   desc: OS service password
   templates:
-    "[[local|localrc]]": "SERVICE_PASSWORD = {{ data['service_password'] }}"
+    - "SERVICE_PASSWORD = {{ data['service_password'] }}"
 
 - name: service_token
   type: string
   default: password
   desc: OS service token
   templates:
-    "[[local|localrc]]": "SERVICE_TOKEN = {{ data['service_token'] }}"
+    - "SERVICE_TOKEN = {{ data['service_token'] }}"
 
 - name: mysql
   type: boolean
   default: true
   desc: Enable MySQL
   templates:
-    "[[local|localrc]]": "{% if data.mysql %}enable_service mysql{% endif -%}"
+    - "{% if data.mysql %}enable_service mysql{% endif %}"
   children:
     - name: password
       when_parent_is: true
@@ -44,15 +44,14 @@
       default: password
       desc: Database password
       templates:
-        "[[local|localrc]]": |
-          DATABASE_PASSWORD = {{ data['mysql.password'] }}
+        - "DATABASE_PASSWORD = {{ data['mysql.password'] }}"
 
 - name: rabbitmq
   type: boolean
   default: true
   desc: Enable RabbitMQ
   templates:
-    "[[local|localrc]]": "{% if data.rabbitmq %}enable_service rabbit{% endif %}"
+    - "{% if data.rabbitmq %}enable_service rabbit{% endif %}"
   children:
     - name: password
       when_parent_is: true
@@ -60,60 +59,59 @@
       default: password
       desc: RabbitMQ password
       templates:
-        "[[local|localrc]]": |
-          RABBIT_PASSWORD = {{ data['rabbitmq.password'] }}
+        - "RABBIT_PASSWORD = {{ data['rabbitmq.password'] }}"
 
 - name: keystone
   type: boolean
   default: true
   desc: Enable Keystone
   templates:
-    "[[local|localrc]]": "{% if data.keystone %}enable_service key{% endif %}"
+    - "{% if data.keystone %}enable_service key{% endif %}"
 
 - name: glance
   type: boolean
   default: true
   desc: Enable Glance
   templates:
-    "[[local|localrc]]": "{% if data.glance %}enable_service g-api,g-reg{% endif %}"
+    - "{% if data.glance %}enable_service g-api,g-reg{% endif %}"
 
 - name: neutron
   type: boolean
   default: true
   desc: Enable Neutron
   templates:
-    "[[local|localrc]]": "{% if data.neutron %}enable_service neutron,q-svc,q-agt,q-dhcp,q-l3,q-meta{% endif %}"
+    - "{% if data.neutron %}enable_service neutron,q-svc,q-agt,q-dhcp,q-l3,q-meta{% endif %}"
   children:
     - name: lbaas
       type: boolean
       default: true
       desc: Enable LBaaS
       templates:
-        "[[local|localrc]]": "{% if data.neutron and data['neutron.lbaas'] %}enable_service q-lbaas{% endif %}"
+        - "{% if data.neutron and data['neutron.lbaas'] %}enable_service q-lbaas{% endif %}"
     - name: fwaas
       type: boolean
       default: false
       desc: Enable FWaaS
       templates:
-        "[[local|localrc]]": "{% if data.neutron and data['neutron.fwaas'] %}enable_service q-fwaas{% endif %}"
+        - "{% if data.neutron and data['neutron.fwaas'] %}enable_service q-fwaas{% endif %}"
 
 - name: nova
   type: boolean
   default: true
   desc: Enable Nova
   templates:
-    "[[local|localrc]]": "{% if data.nova %}enable_service n-api,n-sch,n-cond,n-cpu{% endif %}"
+    - "{% if data.nova %}enable_service n-api,n-sch,n-cond,n-cpu{% endif %}"
 
 - name: cinder
   type: boolean
   default: true
   desc: Enable Cinder
   templates:
-    "[[local|localrc]]": "{% if data.cinder %}enable_service c-api,c-sched,c-vol{% endif %}"
+    - "{% if data.cinder %}enable_service c-api,c-sched,c-vol{% endif %}"
 
 - name: horizon
   type: boolean
   default: true
   desc: Enable Horizon
   templates:
-    "[[local|localrc]]": "{% if data.horizon %}enable_service horizon{% endif %}"
+    - "{% if data.horizon %}enable_service horizon{% endif %}"

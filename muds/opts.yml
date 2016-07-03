@@ -115,3 +115,30 @@
   desc: Enable Horizon
   templates:
     - "{% if data.horizon %}enable_service horizon{% endif %}"
+
+- name: ceilometer
+  type: plugin
+  default: true
+  desc: Enable Ceilometer
+  services:
+    - ceilometer
+    - ceilometer-acompute
+    - ceilometer-acentral
+    - ceilometer-aipmi
+    - ceilometer-anotification
+    - ceilometer-collector
+    - ceilometer-api
+    - ceilometer-alarm-notifier
+    - ceilometer-alarm-evaluator
+
+- name: heat
+  type: plugin
+  default: true
+  desc: Enable heat
+  services: [heat, h-api, h-api-cfn, h-api-cw, h-eng]
+
+- name: cloudkitty
+  type: plugin
+  default: false
+  desc: Enable CloudKitty
+  services: [cloudkitty, ck-api, ck-engine]

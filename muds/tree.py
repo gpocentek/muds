@@ -7,7 +7,8 @@ TYPES = {
     'boolean': 'BooleanNode',
     'string': 'StringNode',
     'choice': 'ChoiceNode',
-    'hidden': 'HiddenNode'
+    'hidden': 'HiddenNode',
+    'plugin': 'PluginNode'
 }
 
 
@@ -22,7 +23,7 @@ class Node(object):
         self.path = (self.parent.path + '.' + self.name
                      if self.parent.path else self.name)
         self.desc = data.get('desc')
-        self.templates = data['templates']
+        self.templates = data.get('templates', [])
         self.when_parent_is = data.get('when_parent_is', None)
         for child in data.get('children', []):
             cls = globals()[TYPES[child['type']]]
@@ -129,6 +130,20 @@ class BooleanNode(Node):
         return s + h
 
 
+class PluginNode(BooleanNode):
+    type = 'plugin'
+
+    def __init__(self, parent, data):
+        super(PluginNode, self).__init__(parent, data)
+        self.services = data.get('services', [])
+        self.templates = [
+            ('{%% if data["%(path)s"] %%}enable_plugin %(name)s '
+             'https://git.openstack.org/openstack/%(name)s.git{%% endif %%}' %
+             {'name': self.name, 'path': self.path}),
+            "enable_service %s" % ",".join(self.services)
+        ]
+
+
 class StringNode(Node):
     type = 'string'
 
@@ -190,7 +205,7 @@ class RootNode(Node):
         self.children = collections.OrderedDict()
         self.root = self
         self.path = ''
-        self.templates = {}
+        self.templates = []
         self.when_parent_is = None
         for child in self.data:
             cls = globals()[TYPES[child['type']]]

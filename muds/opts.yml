@@ -144,6 +144,20 @@
   desc: Enable heat
   services: [heat, h-api, h-api-cfn, h-api-cw, h-eng]
 
+- name: designate
+  type: plugin
+  default: false
+  desc: Enable Designate
+  services:
+    - designate
+    - designate-central
+    - designate-api
+    - designate-pool-manager
+    - designate-zone-manager
+    - designate-mdns
+    - designate-sink
+    - designate-agent
+
 - name: cloudkitty
   type: plugin
   default: false

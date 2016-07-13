@@ -15,14 +15,14 @@
   default: password
   desc: OS administrator password
   templates:
-    - "ADMIN_PASSWORD = {{ data['admin_password'] }}"
+    - "ADMIN_PASSWORD={{ data['admin_password'] }}"
 
 - name: service_password
   type: string
   default: password
   desc: OS service password
   templates:
-    - "SERVICE_PASSWORD = {{ data['service_password'] }}"
+    - "SERVICE_PASSWORD={{ data['service_password'] }}"
 
 - name: service_token
   type: string
@@ -44,7 +44,7 @@
       default: password
       desc: Database password
       templates:
-        - "DATABASE_PASSWORD = {{ data['mysql.password'] }}"
+        - "MYSQL_PASSWORD={{ data['mysql.password'] }}"
 
 - name: rabbitmq
   type: boolean
@@ -59,7 +59,7 @@
       default: password
       desc: RabbitMQ password
       templates:
-        - "RABBIT_PASSWORD = {{ data['rabbitmq.password'] }}"
+        - "RABBIT_PASSWORD={{ data['rabbitmq.password'] }}"
 
 - name: keystone
   type: boolean

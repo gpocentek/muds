@@ -140,7 +140,8 @@ class PluginNode(BooleanNode):
             ('{%% if data["%(path)s"] %%}enable_plugin %(name)s '
              'https://git.openstack.org/openstack/%(name)s.git{%% endif %%}' %
              {'name': self.name, 'path': self.path}),
-            "enable_service %s" % ",".join(self.services)
+            ('{%% if data["%(path)s"] %%}enable_service %(services)s{%% endif %%}' %
+             {'path': self.path, 'services': ','.join(self.services)})
         ]
 
 

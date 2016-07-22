@@ -29,7 +29,7 @@
   default: password
   desc: OS service token
   templates:
-    - "SERVICE_TOKEN = {{ data['service_token'] }}"
+    - "SERVICE_TOKEN={{ data['service_token'] }}"
 
 - name: mysql
   type: boolean

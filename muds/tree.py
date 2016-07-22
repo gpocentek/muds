@@ -73,9 +73,11 @@ class Node(object):
             j2_tmpl = jinja2.Template(template_str)
             line = j2_tmpl.render(data=vtree)
             if line:
-                if hasattr(self, 'desc'):
-                    lines.append("# %s" % self.desc)
                 lines.append(line)
+
+        if lines and hasattr(self, 'desc'):
+            lines.insert(0, "# %s" % self.desc)
+            lines.insert(0, "")
 
         # manage running through children
         for name, child in self.children.items():

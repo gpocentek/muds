@@ -157,6 +157,15 @@
     - designate-mdns
     - designate-sink
     - designate-agent
+  children:
+    - name: backend
+      when_parent_is: true
+      type: choice
+      default: bind9
+      choices: [bind9, powerdns]
+      desc: DNS backend
+      templates:
+        - "DESIGNATE_BACKEND_DRIVER={{ data['designate.backend'] }}"
 
 - name: cloudkitty
   type: plugin

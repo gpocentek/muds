@@ -174,7 +174,7 @@ class ChoiceNode(StringNode):
 
     def get_form(self):
         s = ('<div class="form-group">'
-             '<label for="%(path)s">%(desc)s:</label>"'
+             '<label for="%(path)s">%(desc)s:</label>'
              '<select class="form-control" name="%(path)s" id="%(path)s">' % {
                  'path': self.path,
                  'desc': self.desc

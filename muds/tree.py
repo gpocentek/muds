@@ -91,6 +91,21 @@ class Node(object):
     def get_form(self):
         raise NotImplementedError
 
+    def get_keys(self):
+        data = {
+            'path': self.path,
+            'type': self.type,
+            'desc': self.desc,
+        }
+        if self.when_parent_is:
+            data['when_parent_is'] = self.when_parent_is
+        if self.children:
+            data['children'] = []
+            for child in self.children.values():
+                data['children'].append(child.get_keys())
+
+        return data
+
     def get_tree_form(self):
         form = self.get_form()
         if self.children:
@@ -187,6 +202,11 @@ class ChoiceNode(StringNode):
         s += '</select></div>'
         return s
 
+    def get_keys(self):
+        data = super(ChoiceNode, self).get_keys()
+        data['choices'] = self.choices
+        return data
+
 
 class HiddenNode(Node):
     type = 'hidden'
@@ -224,3 +244,10 @@ class RootNode(Node):
             local_conf += line + '\n'
 
         return local_conf
+
+    def get_keys(self):
+        keys = []
+        for child in self.children.values():
+            keys.append(child.get_keys())
+
+        return keys

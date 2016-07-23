@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, Response, render_template
+from flask import Flask, jsonify, request, Response, render_template
 import yaml
 
 from muds import storage
@@ -32,6 +32,13 @@ def _get_store():
 def index():
     root = _get_root()
     return render_template('form.html', form=root.get_tree_form())
+
+
+@app.route('/api/v1/keys', methods=['GET'])
+def keys():
+    root = _get_root()
+    print root.get_keys()
+    return jsonify(root.get_keys())
 
 
 @app.route('/api/v1/configs', methods=['POST'])

@@ -86,12 +86,14 @@
       type: boolean
       default: true
       desc: Enable LBaaS
+      when_parent_is: true
       templates:
         - "{% if data.neutron and data['neutron.lbaas'] %}enable_service q-lbaas{% endif %}"
     - name: fwaas
       type: boolean
       default: false
       desc: Enable FWaaS
+      when_parent_is: true
       templates:
         - "{% if data.neutron and data['neutron.fwaas'] %}enable_service q-fwaas{% endif %}"
 

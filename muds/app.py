@@ -37,7 +37,6 @@ def index():
 @app.route('/api/v1/keys', methods=['GET'])
 def keys():
     root = _get_root()
-    print root.get_keys()
     return jsonify(root.get_keys())
 
 

@@ -1,5 +1,5 @@
-FROM ubuntu:trusty
-RUN apt-get update && apt-get install -y python-flask python-yaml python-pbr python-setuptools && \
+FROM ubuntu:xenial
+RUN apt-get update && apt-get install -y python-flask python-yaml python-pbr python-setuptools python-pymongo && \
     apt-get install -y apache2 libapache2-mod-wsgi && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 ADD dist/*gz /srv

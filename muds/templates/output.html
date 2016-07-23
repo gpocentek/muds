@@ -19,7 +19,7 @@
 
 <body>
 <div class="container">
-  <div class="col-sm-11">
+  <div class="col-sm-10">
     <pre>
 {{ local_conf }}
     </pre>
@@ -27,7 +27,12 @@
 
   <div class="col-sm-1">
     <a href="/api/v1/configs/{{ uuid }}">
-      <button type="button" class="btn btn-primary">Download</button>
+      <button type="button" class="btn btn-primary">Raw</button>
+    </a>
+  </div>
+  <div class="col-sm-1">
+    <a href="/">
+      <button type="button" class="btn btn-primary">New</button>
     </a>
   </div>
 </div>

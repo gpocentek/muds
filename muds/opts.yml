@@ -8,7 +8,7 @@
   type: boolean
   desc: Reclone
   templates:
-    - "{% if data.reclone %}RECLONE=yes{% endif %}"
+    - "RECLONE={% if data.reclone %}yes{% else %}no{% endif %}"
 
 - name: admin_password
   type: string

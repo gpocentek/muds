@@ -216,3 +216,12 @@ class RootNode(Node):
 
     def get_form(self):
         return ''
+
+    def get_local_conf(self, data):
+        self.set_children_values(data)
+        lines = self.get_local_conf_lines()
+        local_conf = '[[local|localrc]]\n'
+        for line in lines:
+            local_conf += line + '\n'
+
+        return local_conf

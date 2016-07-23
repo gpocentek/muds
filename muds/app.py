@@ -3,12 +3,13 @@ import os
 from flask import Flask, request, Response, render_template
 import yaml
 
+from muds import storage
 from muds import tree
 
 app = Flask(__name__)
 
 root = None
-
+store = None
 
 def _get_root():
     global root
@@ -18,6 +19,12 @@ def _get_root():
         root = tree.RootNode(data)
     return root
 
+def _get_store():
+    global store
+    if store is None:
+        store = storage.Store()
+    return store
+
 
 @app.route('/')
 def index():
@@ -25,18 +32,27 @@ def index():
     return render_template('form.html', form=root.get_tree_form())
 
 
+@app.route('/api/v1/configs', methods=['POST'])
+def post_config():
+    data = {k: v for k, v in request.values.items()}
+    root = _get_root()
+    return Response(root.get_local_conf(data), mimetype='text/plain')
+
+
+@app.route('/api/v1/configs/<uuid>', methods=['GET'])
+def get_config(uuid):
+    store = _get_store()
+    return Response(store.load(uuid), mimetype='text/plain')
+
+
 @app.route('/go', methods=['POST'])
 def go():
+    data = {k: v for k, v in request.values.items()}
     root = _get_root()
-
-    form_data = {k: v for k, v in request.values.items()}
-    root.set_children_values(form_data)
-    lines = root.get_local_conf_lines()
-    local_conf = '[[local|localrc]]\n'
-    for line in lines:
-        local_conf += line + '\n'
-
-    return Response(local_conf, mimetype='text/plain')
+    store = _get_store()
+    local_conf = root.get_local_conf(data)
+    uuid = store.save(local_conf)
+    return render_template('output.html', local_conf=local_conf, uuid=uuid)
 
 
 if __name__ == "__main__":

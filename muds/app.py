@@ -11,6 +11,7 @@ app = Flask(__name__)
 root = None
 store = None
 
+
 def _get_root():
     global root
     if root is None:
@@ -18,6 +19,7 @@ def _get_root():
         data = yaml.load(open(opts_file))
         root = tree.RootNode(data)
     return root
+
 
 def _get_store():
     global store

@@ -1,7 +1,6 @@
 import collections
 
 import jinja2
-import yaml
 
 TYPES = {
     'boolean': 'BooleanNode',
@@ -93,7 +92,6 @@ class Node(object):
         raise NotImplementedError
 
     def get_tree_form(self):
-        vtree = self.root.get_value_tree()
         form = self.get_form()
         if self.children:
             subform = ''
@@ -142,7 +140,8 @@ class PluginNode(BooleanNode):
             ('{%% if data["%(path)s"] %%}enable_plugin %(name)s '
              'https://git.openstack.org/openstack/%(name)s.git{%% endif %%}' %
              {'name': self.name, 'path': self.path}),
-            ('{%% if data["%(path)s"] %%}enable_service %(services)s{%% endif %%}' %
+            ('{%% if data["%(path)s"] %%}enable_service %(services)s'
+             '{%% endif %%}' %
              {'path': self.path, 'services': ','.join(self.services)})
         ]
 

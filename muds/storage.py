@@ -5,7 +5,7 @@ import pymongo
 
 
 class Store(object):
-    def __init__(self, storage_url='mongodb://mongo-muds'):
+    def __init__(self, storage_url='mongodb://mongo'):
         self._client = pymongo.MongoClient(storage_url)
         self._db = self._client.muds
         self._coll = self._db.requests

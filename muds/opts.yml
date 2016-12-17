@@ -140,6 +140,14 @@
     - ceilometer-alarm-notifier
     - ceilometer-alarm-evaluator
 
+- name: gnocchi
+  type: plugin
+  default: true
+  desc: Enable Gnocchi
+  services:
+    - gnocchi-api
+    - gnocchi-metricd
+
 - name: heat
   type: plugin
   default: true

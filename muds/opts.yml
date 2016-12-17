@@ -174,3 +174,12 @@
   default: false
   desc: Enable CloudKitty
   services: [cloudkitty, ck-api, ck-engine]
+  children:
+    - name: collector
+      when_parent_is: true
+      type: choice
+      default: ceilometer
+      choices: [ceilometer, gnocchi]
+      desc: Collector to enable
+      templates:
+        - "CLOUDKITTY_COLLECTOR={{ data['cloudkitty.collector'] }}"

@@ -147,6 +147,16 @@
       templates:
         - "CEILOMETER_BACKEND={{ data['ceilometer.backend'] }}"
 
+- name: aodh
+  type: plugin
+  default: true
+  desc: Enable Aodh
+  services:
+    - aodh-api
+    - aodh-notifier
+    - aodh-evaluator
+    - aodh-listener
+
 - name: gnocchi
   type: plugin
   default: true

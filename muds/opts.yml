@@ -137,8 +137,15 @@
     - ceilometer-anotification
     - ceilometer-collector
     - ceilometer-api
-    - ceilometer-alarm-notifier
-    - ceilometer-alarm-evaluator
+  children:
+    - name: backend
+      when_parent_is: true
+      type: choice
+      default: mongodb
+      choices: [mysql, mongodb, es, gnocchi]
+      desc: Ceilometer storage backend
+      templates:
+        - "CEILOMETER_BACKEND={{ data['ceilometer.backend'] }}"
 
 - name: gnocchi
   type: plugin

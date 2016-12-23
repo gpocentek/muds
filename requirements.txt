@@ -1,4 +1,4 @@
 pbr
 pyyaml
-pymongo
+pymemcache
 flask

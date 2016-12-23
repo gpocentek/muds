@@ -1,27 +1,16 @@
-import time
 import uuid
 
-import pymongo
+from pymemcache.client.base import Client
 
 
 class Store(object):
-    def __init__(self, storage_url='mongodb://mongo'):
-        self._client = pymongo.MongoClient(storage_url)
-        self._db = self._client.muds
-        self._coll = self._db.requests
+    def __init__(self):
+        self._client = Client(('memcache', 11211))
 
     def save(self, text):
         id = str(uuid.uuid4())
-        now = int(time.time())
-
-        self._coll.insert_one({'uuid': id,
-                               'timestamp': now,
-                               'text': text})
-
+        self._client.set(id, text)
         return id
 
     def load(self, id):
-        obj = self._coll.find_one({'uuid': id})
-        if obj:
-            return obj['text']
-        return None
+        return self._client.get(id)

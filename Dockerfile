@@ -1,5 +1,5 @@
 FROM ubuntu:xenial
-RUN apt-get update && apt-get install -y python-flask python-yaml python-pbr python-setuptools python-pymongo && \
+RUN apt-get update && apt-get install -y python-flask python-yaml python-pbr python-setuptools python-pymemcache && \
     apt-get install -y apache2 libapache2-mod-wsgi git && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 ADD . /srv/muds/

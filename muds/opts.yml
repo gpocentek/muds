@@ -168,7 +168,7 @@
 - name: heat
   type: plugin
   default: true
-  desc: Enable heat
+  desc: Enable Heat
   services: [heat, h-api, h-api-cfn, h-api-cw, h-eng]
 
 - name: designate

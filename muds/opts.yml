@@ -102,7 +102,7 @@
   default: true
   desc: Enable Nova
   templates:
-    - "{% if data.nova %}enable_service n-api,n-sch,n-cond,n-cpu{% endif %}"
+    - "{% if data.nova %}enable_service n-api,n-sch,n-cond,n-cpu,placement{% endif %}"
 
 - name: cinder
   type: boolean

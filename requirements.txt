@@ -1,4 +1,5 @@
 pbr
+gunicorn
 pyyaml
 pymemcache
 flask
